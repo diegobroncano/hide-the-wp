@@ -44,6 +44,9 @@ class HTWP_admin
 		);
 	}
 
+	/**
+	 * Register and add all plugin options and sections.
+	 */
 	public function set_options()
 	{
 		// Register settings section
@@ -53,6 +56,54 @@ class HTWP_admin
 			'__return_null',
 			'hide_the_wp'
 		);
+
+
+		// Register hide meta generator option
+		register_setting( 'hide_the_wp_options',
+			'hide_generator_meta',
+			array(
+				'default' => false,
+				'sanitize_callback' => array($this, 'sanitize_option')
+			)
+		);
+
+
+		// Display hide meta generator option
+		add_settings_field(
+			'hide_generator_meta',
+			__( 'Generator meta tag', HTWP_TEXTDOMAIN ),
+			array($this, 'options_hide_generator_meta'),
+			'hide_the_wp',
+			'hide_the_wp_options'
+		);
+
+
+	}
+
+	/**
+	 * Sanitize an option input.
+	 *
+	 * @param mixed $value Value to sanitize
+	 * @return bool Return true if value is a checkbox on, otherwise false
+	 */
+	public function sanitize_option( $value ): bool
+	{
+		if ( $value  === 'on' ) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Add hide generator meta option input to the backend page.
+	 */
+	public function options_hide_generator_meta() {
+		?> <label for="hide_scripts_version">
+			<input type="checkbox" name="hide_generator_meta" id="hide_generator_meta" <?php if(get_option('hide_generator_meta')) { echo 'checked'; } ?>>
+			Remove the generator meta tag
+		</label>
+		<p class="description"><?php esc_html_e("WordPress by default generate a piece of code identifying itself, but you don't want that right?", HTWP_TEXTDOMAIN) ?></p>
+		<?php
 	}
 
 	/**
@@ -69,7 +120,7 @@ class HTWP_admin
 				// Add all needed hidden inputs.
 				settings_fields( 'hide_the_wp_options' );
 
-				// Display all the options.
+				// Display all the sections and options.
 				do_settings_sections( "hide_the_wp" );
 
 				// Add the submit button.
