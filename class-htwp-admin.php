@@ -67,6 +67,15 @@ class HTWP_admin
 			)
 		);
 
+		// Register hide files versions option
+		register_setting( 'hide_the_wp_options',
+			'hide_files_versions',
+			array(
+				'default' => false,
+				'sanitize_callback' => array($this, 'sanitize_option')
+			)
+		);
+
 
 		// Display hide meta generator option
 		add_settings_field(
@@ -77,7 +86,14 @@ class HTWP_admin
 			'hide_the_wp_options'
 		);
 
-
+		// Display hide files versions option
+		add_settings_field(
+			'hide_files_version',
+			__( 'Files versions', HTWP_TEXTDOMAIN ),
+			array($this, 'options_hide_files_versions'),
+			'hide_the_wp',
+			'hide_the_wp_options'
+		);
 	}
 
 	/**
@@ -103,6 +119,18 @@ class HTWP_admin
 			Remove the generator meta tag
 		</label>
 		<p class="description"><?php esc_html_e("WordPress by default generate a piece of code identifying itself, but you don't want that right?", HTWP_TEXTDOMAIN) ?></p>
+		<?php
+	}
+
+	/**
+	 * Add hide files versions option input to the backend page.
+	 */
+	public function options_hide_files_versions() {
+		?>
+		<label for="hide_files_version">
+			<input type="checkbox" name="hide_files_version" id="hide_files_version" <?php if(get_option('hide_files_version')) { echo 'checked'; } ?>>
+			<?php esc_html_e( 'Hide version from files loaded in your website.', HTWP_TEXTDOMAIN ) ?> </label>
+		<p class="description"><?php esc_html_e( "Files required by your website (like scripts or fonts), usually show its version to avoid cache problems. However, those files hardly ever change and usually there isn't that kind of problems.", HTWP_TEXTDOMAIN ) ?></p>
 		<?php
 	}
 
