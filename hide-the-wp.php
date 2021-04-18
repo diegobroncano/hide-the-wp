@@ -30,7 +30,8 @@ if ( !defined( 'ABSPATH' ) ) {
  *
  * @package Hide_The_WP
  */
-final class HTWP_init {
+final class HTWP_init
+{
 
 	/**
 	 * Plugin version
@@ -118,8 +119,10 @@ final class HTWP_init {
 	 */
 	private function inits()
 	{
-		$admin = new HTWP_admin();
-		$admin->load();
+		if ( is_admin() ) {
+			$admin = new HTWP_admin();
+			$admin->load();
+		}
 
 		$core = new HTWP_core();
 		$core->load();
