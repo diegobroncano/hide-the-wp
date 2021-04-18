@@ -58,7 +58,7 @@ class HTWP_admin
 		);
 
 
-		// Register hide meta generator option
+		// Register hide generator meta tag option
 		register_setting( 'hide_the_wp_options',
 			'hide_generator_meta',
 			array(
@@ -114,7 +114,7 @@ class HTWP_admin
 	 * Add hide generator meta option input to the backend page.
 	 */
 	public function options_hide_generator_meta() {
-		?> <label for="hide_scripts_version">
+		?> <label for="hide_generator_meta">
 			<input type="checkbox" name="hide_generator_meta" id="hide_generator_meta" <?php if(get_option('hide_generator_meta')) { echo 'checked'; } ?>>
 			Remove the generator meta tag
 		</label>
