@@ -21,6 +21,11 @@ class HTWP_core
 			add_filter('style_loader_src', array($this, 'hide_files_versions'), 9999, 2);
 			add_filter('script_loader_src', array($this, 'hide_files_versions'), 9999, 2);
 		}
+
+		// Remove Windows Live Writer manifest
+		if ( get_option('hide_wlwmanifest') ) {
+			$this->hide_wlwmanifest();
+		}
 	}
 
 	/**
@@ -45,5 +50,14 @@ class HTWP_core
 	private function hide_generator_meta()
 	{
 		remove_action( 'wp_head', 'wp_generator' );
+	}
+
+	/**
+	 * Remove the Windows Live Writer manifest link in the website header.
+	 * WordPress includes that link by default, although it's completely useless unless you use it.
+	 */
+	private function hide_wlwmanifest()
+	{
+		remove_action('wp_head', 'wlwmanifest_link');
 	}
 }
