@@ -85,6 +85,15 @@ class HTWP_admin
 			)
 		);
 
+		// Register disable XML-RPC option
+		register_setting( 'hide_the_wp_options',
+			'disable_xmlrpc',
+			array(
+				'default' => false,
+				'sanitize_callback' => array($this, 'sanitize_option')
+			)
+		);
+
 
 		// Display hide meta generator option
 		add_settings_field(
@@ -109,6 +118,15 @@ class HTWP_admin
 			'hide_wlwmanifest',
 			__( 'Windows Live Writer', HTWP_TEXTDOMAIN ),
 			array($this, 'options_hide_wlwmanifest'),
+			'hide_the_wp',
+			'hide_the_wp_options'
+		);
+
+		// Display hide windows live writer option
+		add_settings_field(
+			'disable_xmlrpc',
+			__( 'XML-RPC', HTWP_TEXTDOMAIN ),
+			array($this, 'options_disable_xmlrpc'),
 			'hide_the_wp',
 			'hide_the_wp_options'
 		);
@@ -162,6 +180,19 @@ class HTWP_admin
 			<?php esc_html_e( 'Hide the Windows Live Writer manifest', HTWP_TEXTDOMAIN ) ?>
 		</label>
 		<p class="description"><?php esc_html_e("You can enable this checkbox if you don't use Windows Live Writer, who use it already?"); ?></p>
+		<?php
+	}
+
+	/**
+	 * Add disable XML-RPC option to the backend page.
+	 */
+	public function options_disable_xmlrpc() {
+		?>
+		<label for="disable_xmlrpc">
+			<input type="checkbox" name="disable_xmlrpc" id="disable_xmlrpc" <?php if(get_option('disable_xmlrpc')) { echo 'checked'; } ?>>
+			<?php esc_html_e( 'Disable the XML-RPC standard', HTWP_TEXTDOMAIN ) ?>
+		</label>
+		<p class="description"><?php esc_html_e("XML-RPC is a protocol to communicate WordPress with third party services, but also can be a security issue. If you can, we definitely encourage you to deactivate it."); ?></p>
 		<?php
 	}
 
