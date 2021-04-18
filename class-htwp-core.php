@@ -18,8 +18,8 @@ class HTWP_core
 
 		// Remove files version.
 		if ( get_option('hide_files_versions') ) {
-			add_filter('style_loader_src', array($this, 'hide_file_version'), 9999, 2);
-			add_filter('script_loader_src', array($this, 'hide_file_version'), 9999, 2);
+			add_filter('style_loader_src', array($this, 'hide_files_versions'), 9999, 2);
+			add_filter('script_loader_src', array($this, 'hide_files_versions'), 9999, 2);
 		}
 	}
 
@@ -30,7 +30,7 @@ class HTWP_core
 	 * @param mixed $src File URL
 	 * @return mixed
 	 */
-	public function hide_file_version( $src )
+	public function hide_files_versions( $src )
 	{
 		if( strpos( $src, '?ver=' ) ) {
 			$src = remove_query_arg('ver', $src);

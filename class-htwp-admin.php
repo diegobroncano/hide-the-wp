@@ -88,7 +88,7 @@ class HTWP_admin
 
 		// Display hide files versions option
 		add_settings_field(
-			'hide_files_version',
+			'hide_files_versions',
 			__( 'Files versions', HTWP_TEXTDOMAIN ),
 			array($this, 'options_hide_files_versions'),
 			'hide_the_wp',
@@ -127,8 +127,8 @@ class HTWP_admin
 	 */
 	public function options_hide_files_versions() {
 		?>
-		<label for="hide_files_version">
-			<input type="checkbox" name="hide_files_version" id="hide_files_version" <?php if(get_option('hide_files_version')) { echo 'checked'; } ?>>
+		<label for="hide_files_versions">
+			<input type="checkbox" name="hide_files_versions" id="hide_files_versions" <?php if(get_option('hide_files_versions')) { echo 'checked'; } ?>>
 			<?php esc_html_e( 'Hide version from files loaded in your website.', HTWP_TEXTDOMAIN ) ?> </label>
 		<p class="description"><?php esc_html_e( "Files required by your website (like scripts or fonts), usually show its version to avoid cache problems. However, those files hardly ever change and usually there isn't that kind of problems.", HTWP_TEXTDOMAIN ) ?></p>
 		<?php
