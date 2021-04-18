@@ -76,6 +76,15 @@ class HTWP_admin
 			)
 		);
 
+		// Register hide windows live writer option
+		register_setting( 'hide_the_wp_options',
+			'hide_wlwmanifest',
+			array(
+				'default' => false,
+				'sanitize_callback' => array($this, 'sanitize_option')
+			)
+		);
+
 
 		// Display hide meta generator option
 		add_settings_field(
@@ -91,6 +100,15 @@ class HTWP_admin
 			'hide_files_versions',
 			__( 'Files versions', HTWP_TEXTDOMAIN ),
 			array($this, 'options_hide_files_versions'),
+			'hide_the_wp',
+			'hide_the_wp_options'
+		);
+
+		// Display hide windows live writer option
+		add_settings_field(
+			'hide_wlwmanifest',
+			__( 'Windows Live Writer', HTWP_TEXTDOMAIN ),
+			array($this, 'options_hide_wlwmanifest'),
 			'hide_the_wp',
 			'hide_the_wp_options'
 		);
@@ -131,6 +149,19 @@ class HTWP_admin
 			<input type="checkbox" name="hide_files_versions" id="hide_files_versions" <?php if(get_option('hide_files_versions')) { echo 'checked'; } ?>>
 			<?php esc_html_e( 'Hide version from files loaded in your website.', HTWP_TEXTDOMAIN ) ?> </label>
 		<p class="description"><?php esc_html_e( "Files required by your website (like scripts or fonts), usually show its version to avoid cache problems. However, those files hardly ever change and usually there isn't that kind of problems.", HTWP_TEXTDOMAIN ) ?></p>
+		<?php
+	}
+
+	/**
+	 * Add hide windows live writer manifest option to the backend page.
+	 */
+	public function options_hide_wlwmanifest() {
+		?>
+		<label for="hide_wlwmanifest">
+			<input type="checkbox" name="hide_wlwmanifest" id="hide_wlwmanifest" <?php if(get_option('hide_wlwmanifest')) { echo 'checked'; } ?>>
+			<?php esc_html_e( 'Hide the Windows Live Writer manifest', HTWP_TEXTDOMAIN ) ?>
+		</label>
+		<p class="description"><?php esc_html_e("You can enable this checkbox if you don't use Windows Live Writer, who use it already?"); ?></p>
 		<?php
 	}
 
